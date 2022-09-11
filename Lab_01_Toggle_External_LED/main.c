@@ -11,23 +11,35 @@
 
 int main(void)
 {
+	unsigned delay = 1000;
+		
 	DDRB |= 0x20;				// (1 << DDB5)
 	DDRC |= 0x01;
+
+	// Set Initial Pins
+	PORTB |= 0x20;
+	PORTC &= ~( 0x01 );
 
 	while (1)
 	{
 		if (( PINB & 0x20 ) == 0x20 )
 		{
 			PORTB &= ~( 0x20 );
-			PORTC |= 0x01;
 		}
 		else
 		{
 			PORTB |= 0x20;
-			PORTC &= ~( 0x01 );
 		}
 
-		_delay_ms( 500 );
+		if (( PINC  & 0x01 ) == 0x01 )
+		{
+			PORTC &= ~( 0x01 );
+		}
+		else
+		{
+			PORTC |= 0x01;
+		}
+		_delay_ms( delay );
 	}
 }
 
